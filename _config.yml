@@ -4,12 +4,12 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "flexton.netlify.com" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Author
-author-name:    Joseph Yang
+author-name:    devyoseph
 author-image:   1.jpg
 author-job:     Web Developer
 author-email:   josephdev123@naver.com # Add your email for contant form.
 author-twitter:  # Add your twitter account
-about-author:   I want to be a full-stack developer focusing on back-end development. Always hungry to keep learning.
+about-author:   풀스택 개발자를 목표로 하는 devyoseph 입니다
 
 # Social settings
 social-twitter:   
