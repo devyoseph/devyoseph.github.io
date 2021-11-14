@@ -1,14 +1,16 @@
 ---
 layout: post
-title: Style Guide
-image: 8.jpg
-date: 2018-03-02 13:35:20 +0200
+title: Toy Project_01 - Magician Game
+image: blackhole.jpeg
+date: 2021-11-14 21:25:20 +0200
 tags:
-categories: guide
+categories: project
 ---
-A paragraph looks like this — dolor amet cray stumptown fingerstache neutra food truck seitan poke cardigan waistcoat VHS snackwave celiac hella. Godard seitan shoreditch flexitarian next level trust fund man braid vegan listicle keytar bitters. Disrupt cray fashion axe unicorn lomo shaman poke glossier keffiyeh snackwave austin tattooed seitan hexagon lo-fi. Lumbersexual irony vaporware, butcher shaman church-key iceland.
+자바스크립트 DOM을 이해하고 활용하기 위해 12일 동안 미니 게임을 만들어 보았습니다. 처음에는 대포를 주제로 구상했지만 다양한 시도를 하면서 마법사가 주인공이 되었죠. 아래 링크를 통해 이동하실 수 있습니다!
 
 ***
+
+<a href="../project/_cannon/start.html" >이동</a>
 
 #### Headings by default:
 
