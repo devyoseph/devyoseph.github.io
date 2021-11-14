@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Toy Project_01 - Magician Game
-image: blackhole.jpeg
+image: post1.jpeg
 date: 2021-11-14 21:25:20 +0200
 tags:
 categories: project
