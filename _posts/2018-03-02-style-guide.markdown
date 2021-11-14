@@ -10,7 +10,7 @@ categories: project
 
 ***
 
-<a href="../project/_cannon/start.html" >이동</a>
+<a href="../index.html" >이동</a>
 
 #### Headings by default:
 
