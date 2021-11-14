@@ -10,7 +10,7 @@ categories: project
 
 ***
 
--[이동](https://github.com/devyoseph/devyoseph.github.io/blob/main/project/_cannon/start.html)
+-[이동](https://devyoseph.github.io/start.html)
 
 #### Headings by default:
 
