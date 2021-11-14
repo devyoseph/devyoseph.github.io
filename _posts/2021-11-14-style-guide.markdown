@@ -10,7 +10,7 @@ categories: project
 
 ***
 
--[이동](project/_cannon/start.html)
+-[이동](/Users/yang-yoseb/VsStudy/git/devyoseph.github.io/project/_cannon/start.html)
 
 #### Headings by default:
 
