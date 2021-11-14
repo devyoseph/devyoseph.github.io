@@ -25,9 +25,5 @@ categories: project
 
 </br>
 
-***
-
-</br>
-
 ## 히스토리
 ##### 더 자세한 내용은 [티스토리 블로그](https://devyoseph.tistory.com/category/Project/01%20Cannon%20Game)에서 확인하실 수 있습니다
