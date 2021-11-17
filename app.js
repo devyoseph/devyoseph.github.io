@@ -9,6 +9,7 @@ import { Teleport } from './element/teleport.js';
 import { Mana } from './element/mana.js';
 import{Text} from './element/text.js';
 import{Gauging} from './element/gauging.js';
+import{Button} from './element/button.js';
 //대기
 let wait_timer = 0;
 let wait_load = false;
@@ -64,6 +65,15 @@ class App{
         window.addEventListener('resize', this.resize.bind(this), false);
         this.resize(); //리사이즈가 이벤트를 거치지 않아도 발동하기 위함
 
+        //버튼: click들을 하나로 통일하는 작업 필요
+        this.button = new Button(this.stageWidth,this.stageHeight);
+        document.addEventListener('click', this.cannonMove2.bind(this), false);
+        document.addEventListener('dblclick', this.teleportMove2.bind(this), false);
+        document.addEventListener('click', this.angleTurn2.bind(this), false);
+        document.addEventListener('click', this.cannonAiming2.bind(this), false);
+        document.addEventListener('click', this.shiftBallMagnitude2.bind(this));
+        document.addEventListener('mousedown', this.fire_before2.bind(this), false);
+        document.addEventListener('click', this.shiftBallType2.bind(this));
         //대포 관련
         this.cannon = new Cannon(this.stageWidth, this.stageHeight);
         cannonFixY = this.cannon.y;
@@ -159,6 +169,8 @@ class App{
                 o.splice(i,1);
             }
         })
+        //버튼
+        this.button.draw(this.ctx);
         //공을 발사
         if(fire_ball === true){
             var ball =  new Ball(onLeft, this.cannon.cannon_width,ball_type, ball_magnitude, gauge_transfer,this.cannon.x, this.cannon.y, ball_angle, this.stageWidth, this.stageHeight);
@@ -218,23 +230,61 @@ class App{
         cannonY += Math.sin(timer_angle);
     }
     cannonMove(e){
-        if(e.code === 'ArrowLeft' && onGame ==true){
+        if(e.code === 'ArrowLeft'&& onGame ==true){
             this.cannon.x -= this.stageWidth/100;
         }
         if(e.code === 'ArrowRight' && onGame ==true){
             this.cannon.x += this.stageWidth/100;
         }
     }
+    cannonMove2(e){
+        if(e.clientX>=(this.button.x1-this.button.radius)
+        && e.clientX<=(this.button.x1+this.button.radius)
+        && e.clientY>=(this.button.y1-this.button.radius)
+        && e.clientY<=(this.button.y1+this.button.radius)
+        &&onGame ==true){
+            onLeft=true;
+            this.cannon.x -= this.stageWidth/100;
+        }
+        if(e.clientX>=(this.button.x2-this.button.radius)
+        && e.clientX<=(this.button.x2+this.button.radius)
+        && e.clientY>=(this.button.y2-this.button.radius)
+        && e.clientY<=(this.button.y2+this.button.radius)
+        &&onGame ==true){
+            onLeft=false;
+            this.cannon.x += this.stageWidth/100;
+        
+    }}
     teleportMove(e){
         if(e.code === 'KeyX' && present_move == 1){
             on_teleport = true;
-            teleportX = this.cannon.x
+            teleportX = this.cannon.x;
             this.cannon.x += this.stageWidth/6;
         }
         if(e.code === 'KeyX' && present_move == -1){
             on_teleport = true;
-            teleportX = this.cannon.x
+            teleportX = this.cannon.x;
             this.cannon.x -= this.stageWidth/6;
+        }      
+    }
+    teleportMove2(e){
+        if(e.clientX>=(this.button.x1-this.button.radius)
+        && e.clientX<=(this.button.x1+this.button.radius)
+        && e.clientY>=(this.button.y1-this.button.radius)
+        && e.clientY<=(this.button.y1+this.button.radius)
+        &&onGame ==true){
+            on_teleport = true;
+            teleportX = this.cannon.x;
+            this.cannon.x -= this.stageWidth/6;
+        }
+        if(e.clientX>=(this.button.x2-this.button.radius)
+        && e.clientX<=(this.button.x2+this.button.radius)
+        && e.clientY>=(this.button.y2-this.button.radius)
+        && e.clientY<=(this.button.y2+this.button.radius)
+        &&onGame ==true){
+            on_teleport = true;
+            teleportX = this.cannon.x;
+            this.cannon.x += this.stageWidth/6;
         }      
     }
     angleTurn(e){
@@ -243,7 +293,8 @@ class App{
             past_move = present_move;
             present_move = -1;  
             if(past_move == 1 && present_move == -1){
-            ball_angle = Math.PI - ball_angle;}
+            ball_angle = Math.PI - ball_angle;    
+            }
         }
         if(e.code === 'ArrowRight' && onGame ==true){
             onLeft = false;
@@ -253,7 +304,30 @@ class App{
             ball_angle = Math.PI - ball_angle;}
         }
     }
-
+    angleTurn2(e){
+        if(e.clientX>=(this.button.x1-this.button.radius)
+        && e.clientX<=(this.button.x1+this.button.radius)
+        && e.clientY>=(this.button.y1-this.button.radius)
+        && e.clientY<=(this.button.y1+this.button.radius)
+        &&onGame ==true){
+            onLeft = true;
+            past_move = present_move;
+            present_move = -1;  
+            if(past_move == 1 && present_move == -1){
+            ball_angle = Math.PI - ball_angle;}
+        }
+        if(e.clientX>=(this.button.x2-this.button.radius)
+        && e.clientX<=(this.button.x2+this.button.radius)
+        && e.clientY>=(this.button.y2-this.button.radius)
+        && e.clientY<=(this.button.y2+this.button.radius)
+        &&onGame ==true){
+            onLeft = false;
+            past_move = present_move;
+            present_move = 1;
+            if(past_move == -1 && present_move == 1){
+            ball_angle = Math.PI - ball_angle;}
+        }
+    }
     cannonAiming(e){
         if(e.code === 'ArrowUp' && onGame ==true){
             last_angle = present_angle;
@@ -295,11 +369,77 @@ class App{
         }
     }
 
+    cannonAiming2(e){
+        if(e.clientX>=(this.button.x3-this.button.radius)
+        && e.clientX<=(this.button.x3+this.button.radius)
+        && e.clientY>=(this.button.y3-this.button.radius)
+        && e.clientY<=(this.button.y3+this.button.radius)
+        &&onGame ==true){
+            last_angle = present_angle;
+            present_angle = 1;
+            if(last_angle*present_angle==1){
+                on_aim =  true;}
+            if(last_angle*present_angle==-1){
+                angle_timer = 0;}
+            ball_angle += PI/180;
+            
+            if(angle_timer >=3 ){
+                ball_angle += PI/90;
+            }
+            if(angle_timer >=6 ){
+                ball_angle += PI/45;
+            }
+            if(angle_timer >=9 ){
+                ball_angle += PI/20;
+            }
+        }
+        if(e.clientX>=(this.button.x4-this.button.radius)
+        && e.clientX<=(this.button.x4+this.button.radius)
+        && e.clientY>=(this.button.y4-this.button.radius)
+        && e.clientY<=(this.button.y4+this.button.radius)
+        &&onGame ==true){
+            last_angle = present_angle;
+            present_angle = -1;
+            if(last_angle*present_angle==1){
+            on_aim =  true;}
+            if(last_angle*present_angle==-1){
+                angle_timer = 0;}
+            ball_angle -= PI/180;
+            
+            if(angle_timer >=3 ){
+                ball_angle -= PI/90;
+            }
+            if(angle_timer >=6 ){
+                ball_angle -= PI/45;
+            }
+            if(angle_timer >=9 ){
+                ball_angle -= PI/20;
+            }
+        }
+    }
     fire_before(e){
         if(e.code === 'Space' && onGame ==true){
             on_gauge = true;
         }
     }
+
+    fire_before2(e){
+        if(e.clientX>=this.button.fireX
+        && e.clientX<=(this.button.fireX+this.button.fireWidth)
+        && e.clientY>=this.button.fireY
+        && e.clientY<=(this.button.fireY+this.button.fireHeight)
+        &&onGame ==true){
+            if(on_gauge === false){
+                on_gauge=true;
+            }else if(on_gauge===true){
+                on_gauge = false;
+                fire_ball = true;
+                gauge_transfer = gauge_percent*0.01;
+                gauge_percent=0;
+            }
+        }
+    }
+
     fire_after(e){
         if(e.code === 'Space' && onGame ==true){
             on_gauge = false;
@@ -318,9 +458,35 @@ class App{
             }
         }
     }
+    shiftBallType2(e){
+        if(e.clientX>=this.present_ball.x
+            && e.clientX<=this.stageWidth
+            && e.clientY>=this.present_ball.y
+            && e.clientY<=this.stageHeight
+            &&onGame ==true){      
+            switch(ball_type){
+                case 1: ball_type++; break;
+                case 2: ball_type++; break;
+                case 3: ball_type = 1; break;
+            }
+        }
+    }
 
     shiftBallMagnitude(e){
         if(e.code === 'KeyZ' && onGame ==true){
+            switch(ball_magnitude){
+                case 1: ball_magnitude++; break;
+                case 2: ball_magnitude++; break;
+                case 3: ball_magnitude = 1; break;
+            }
+        }
+    }
+    shiftBallMagnitude2(e){
+        if(e.clientX>=(this.button.x5-this.button.radius)
+        && e.clientX<=(this.button.x5+this.button.radius)
+        && e.clientY>=(this.button.y5-this.button.radius)
+        && e.clientY<=(this.button.y5+this.button.radius)
+        &&onGame ==true){
             switch(ball_magnitude){
                 case 1: ball_magnitude++; break;
                 case 2: ball_magnitude++; break;

@@ -3,7 +3,9 @@ export class PresentBall{
         this.stageWidth = stageWidth;
         this.stageHeight = stageHeight;
         this.width = this.stageWidth/3;
+        this.smallWidth = this.width/8;
         this.height = this.stageHeight/7;
+        this.smallHeight = this.stageHeight/14;
         this.x = this.stageWidth - this.width;
         this.y = this.stageHeight - this.height;
     }
